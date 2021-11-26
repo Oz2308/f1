@@ -12,11 +12,14 @@ mydb = mysql.connector.connect(
 
 mycursor = mydb.cursor()
 
-## CREATE DB & TABLE ##
+## CREATE DB & TABLES ##
 mycursor.execute("CREATE DATABASE IF NOT EXISTS mydatabase")
 mycursor.execute("CREATE TABLE IF NOT EXISTS constructors (id INT NOT NULL AUTO_INCREMENT, name VARCHAR(50) NOT NULL, PRIMARY KEY (id))")
+mycursor.execute("CREATE TABLE IF NOT EXISTS drivers (id INT NOT NULL AUTO_INCREMENT, firstname VARCHAR(50) NOT NULL, surname VARCHAR(50) NOT NULL, PRIMARY KEY (id))")
 
-# ## TESTING VARS ##
+# ## TESTING BLOCK ##
+# year = 1986
+# Constructors = f"http://ergast.com/api/f1/{year}/drivers"
 # Constructors = "http://ergast.com/api/f1/2021/constructors"
 # site = requests.get(Constructors)
 # siteSRC = site.content
@@ -30,19 +33,23 @@ mycursor.execute("CREATE TABLE IF NOT EXISTS constructors (id INT NOT NULL AUTO_
 # for team in teams:
 #      val.append(tuple(team))
 
-query = "INSERT INTO constructors (name) VALUES (%s)"
-mycursor.executemany(query,)
+## INSERT DATA INTO TABLES ##
+teamquery = "INSERT INTO constructors (name) VALUES (%s)"
+mycursor.executemany(teamquery,val)
 mydb.commit()
 
-## SHOW ALL ROWS IN TABLE ##
-mycursor.execute("SELECT * FROM constructors")
+namequery = "INSERT INTO drivers (firstname, surname) VALUES (%s, %s)"
+mycursor.executemany(namequery,vals)
+mydb.commit()
+
+# SHOW ALL ROWS IN TABLE ##
+mycursor.execute("SELECT * FROM drivers")
 myresult = mycursor.fetchall()
  
-for x in myresult:
-    print(x)
+for result in myresult:
+    print(result)
 
 
 ## DELETE TABLE ##
-
-# dely = "DROP TABLE constructors"
-# mycursor.execute(dely)
+# del_table = "DROP TABLE *******table name*******"
+# mycursor.execute(del_table)
