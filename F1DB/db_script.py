@@ -1,21 +1,21 @@
 from typing import Optional
 import requests
 from bs4 import BeautifulSoup
-import mysql.connector
+import mysql.connector 
 from datapoints import constructors
 
 ## CREATE & CONNECT TO DB ##
 mydb = mysql.connector.connect(
     host="127.0.0.1", 
     user="root", 
-    password="f1root", 
-    database="mydatabase"
+    password="f1root"        
 )
 
 mycursor = mydb.cursor()
 
 ## CREATE DB & TABLES ##
 mycursor.execute("CREATE DATABASE IF NOT EXISTS mydatabase")
+mycursor.execute("USE mydatabase")
 mycursor.execute("CREATE TABLE IF NOT EXISTS constructors (id INT NOT NULL AUTO_INCREMENT, name VARCHAR(50) NOT NULL, PRIMARY KEY (id))")
 mycursor.execute("CREATE TABLE IF NOT EXISTS drivers (id INT NOT NULL AUTO_INCREMENT, firstname VARCHAR(50) NOT NULL, surname VARCHAR(50) NOT NULL, PRIMARY KEY (id))")
 
@@ -36,9 +36,9 @@ mycursor.execute("CREATE TABLE IF NOT EXISTS drivers (id INT NOT NULL AUTO_INCRE
 #      val.append(tuple(team))
 
 ## INSERT DATA INTO TABLES ##
-teamquery = "INSERT INTO constructors (name) VALUES (%s)"
-mycursor.executemany(teamquery,)
-mydb.commit()
+# teamquery = "INSERT INTO constructors (name) VALUES (%s)"
+# mycursor.executemany(teamquery,)
+# mydb.commit()
 
 # namequery = "INSERT INTO drivers (firstname, surname) VALUES (%s, %s)"
 # mycursor.executemany(namequery,vals)
@@ -59,8 +59,8 @@ def table_results(table: str, limit: Optional[int] = None):
 
 #TODO FIND IF CAN CALL FUNC FROM TERMINAL OR CREATE FILE
 
-# def delete_table(table):
-#     del_table = f"DROP TABLE {table}"
-#     mycursor.execute(del_table)
+def delete_table(table):
+    del_table = f"DROP TABLE {table}"
+    mycursor.execute(del_table)
 
 # delete_table('constructors')
