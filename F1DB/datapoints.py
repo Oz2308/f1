@@ -1,10 +1,12 @@
 import requests
 from bs4 import BeautifulSoup
 
-class constructors:
+class year:
 	def __init__(self, year) -> None:
 		self.year = year
 		self.base_url = f"http://ergast.com/api/f1/{self.year}"
+
+class constructors(year):
 
 	def constructors_func(self):
 		constructors = f"{self.base_url}/constructors"
@@ -20,9 +22,7 @@ class constructors:
 			val.append(tuple(team))
 		return val
 
-class drivers:
-	year = 1986
-	base_url = f"http://ergast.com/api/f1/{year}"
+class drivers(year):
 
 	def driver_names(self):
 		drivers = f"{self.base_url}/drivers"
@@ -43,18 +43,4 @@ class drivers:
 			surname.append(name.text)
 
 		formatnames = zip(firstname, surname)
-		vals = list(formatnames)
-
-## TESTING YEARS INPUT ##
-
-# year = 2021
-# Constructors = f"http://ergast.com/api/f1/{year}/constructors"
-
-# site = requests.get(Constructors)
-# siteSRC = site.content
-
-# soup = BeautifulSoup(siteSRC, 'html.parser')
-# print(soup.find_all('name'))
-# soup = BeautifulSoup(siteSRC, 'html.parser')
-# for year in soup.find_all('constructortable'):
-#     print(year['season'])
+		return list(formatnames)

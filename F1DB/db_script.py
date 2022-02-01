@@ -2,7 +2,7 @@ from typing import Optional
 import requests
 from bs4 import BeautifulSoup
 import mysql.connector 
-from datapoints import constructors
+from datapoints import constructors, drivers, year
 
 ## CREATE & CONNECT TO DB ##
 mydb = mysql.connector.connect(
@@ -35,13 +35,15 @@ mycursor.execute("CREATE TABLE IF NOT EXISTS drivers (id INT NOT NULL AUTO_INCRE
 # for team in teams:
 #      val.append(tuple(team))
 
-## INSERT DATA INTO TABLES ##
+#TODO look into making below into functions
+
+# # INSERT DATA INTO TABLES ##
 # teamquery = "INSERT INTO constructors (name) VALUES (%s)"
-# mycursor.executemany(teamquery,)
+# mycursor.executemany(teamquery,constructors(1986).constructors_func())
 # mydb.commit()
 
 # namequery = "INSERT INTO drivers (firstname, surname) VALUES (%s, %s)"
-# mycursor.executemany(namequery,vals)
+# mycursor.executemany(namequery,drivers(1986).driver_names())
 # mydb.commit()
 
 ## SHOW ALL ROWS IN TABLE ##
@@ -54,7 +56,6 @@ def table_results(table: str, limit: Optional[int] = None):
 
     for result in myresult:
         print(result)
-
 # table_results()
 
 #TODO FIND IF CAN CALL FUNC FROM TERMINAL OR CREATE FILE
@@ -63,4 +64,4 @@ def delete_table(table):
     del_table = f"DROP TABLE {table}"
     mycursor.execute(del_table)
 
-# delete_table('constructors')
+# delete_table('TableName')
